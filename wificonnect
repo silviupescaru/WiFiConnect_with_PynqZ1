@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#Verificam daca interfata wlan0 este pornita
+if ip a | grep wlan0 > /dev/null; then
+	if ip a | grep wlan0 | grep DOWN > /dev/null; then
+		sudo ip link set wlan0 up
+		sudo ifconfig wlan0 up
+	fi
+fi
+
+#Introducem ca si argumente ssid si parola
+read -p "Enter SSID: " ssid
+read -s -p "Enter password" pswd
+echo
+
+#Incercam conectarea
+sudo nmcli dev wifi connect "$ssid" password "$pswd"
